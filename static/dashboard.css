@@ -1,0 +1,158 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.sidebar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100vh; 
+    width: 280px;
+    background-color: rgb(7, 78, 139);
+    padding: 0.4px;
+    transition: all 0.5s ease;
+}
+
+.sidebar.active{
+    width: 140px;
+}
+.sidebar.active .nav-item{
+    display:none;
+}
+.sidebar.active .username {
+    display: none; 
+}
+.sidebar .top {
+    display: flex;
+    height: 90px; 
+    justify-content: flex-end;
+    color:white;
+}
+.sidebar.active .top {
+    justify-content: center; 
+}
+#btn {
+    font-size: 75px;
+    color: white; 
+    background-color: transparent; 
+    border: none;
+    cursor: pointer; 
+}
+#btn:hover{
+    cursor:pointer;
+    opacity: 0.7;
+}
+
+.sidebar ul {
+    list-style: none;
+}
+
+
+.sidebar ul li a {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    color: white; 
+    text-decoration: none;
+    margin-bottom: 10px;
+    justify-content: center;
+    align-items: center;
+}
+.sidebar ul li a i {
+    min-width: 60px; 
+    font-size: 40px;
+    text-align: center;
+    height: 60px; 
+    border-radius: 30px; 
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+}
+.sidebar ul li a .nav-item {
+    flex-grow: 1; 
+    margin-left: 10px;
+    transition: opacity 0.3s; /* Smooth transition for hiding */
+}
+.sidebar ul li .tooltip {
+    position: absolute;
+    left: 100%; 
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+    visibility: hidden; 
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+span{
+    font-size: 28px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.container {
+    margin-left: 280px; 
+    padding: 20px;
+}
+.container .event-form input{
+    font-size: 18px; 
+}
+.container .event-form button {
+    padding: 8px 20px; 
+    font-size: 18px; 
+    border-radius: 19px;
+    border: none;
+    background-color:rgb(126, 126, 216);
+}
+.container .event-form button:hover{
+    opacity: 0.7;
+    cursor: pointer;
+}
+
+h2 {
+    margin-bottom: 10px;
+}
+.input {
+    width: 80%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+#expenseList {
+    font-size: 28px;
+}
+
+.expense-item {
+    display: flex; 
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f0f0f0; 
+    border: 1px solid #ccc; 
+    border-radius: 8px; 
+    padding: 10px;
+    margin: 10px 0; 
+}
+
+.delete-btn {
+    background-color: #ff4d4d; 
+    color: white; 
+    border: none; 
+    border-radius: 4px;
+    padding: 5px 10px; 
+    cursor: pointer; 
+}
+
+.delete-btn:hover {
+    background-color: #ff1a1a; 
+}
+
+.total-amount {
+    text-align: right; 
+    font-size: 18px;
+    margin-top: 20px; 
+}

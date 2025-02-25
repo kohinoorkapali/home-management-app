@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='dashboard.css') }}" />
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar/index.global.min.js'></script>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="top">
+            {% if session['full_name'] %}
+                <span class="username">Welcome, {{ session['full_name'] }}</span>
+            {% endif %}
+            <i class="bx bx-menu" id="btn"></i> 
+        </div>
+        <ul>
+            <li>
+                <a href="#" id="calendar-icon">
+                    <i class="bx bxs-calendar"></i>
+                    <span class="nav-item">Calendar</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" id="todo-icon">
+                    <i class="bx bx-task"></i>
+                    <span class="nav-item">To-Do List</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" id="expense-icon">
+                    <i class="bx bx-wallet"></i>
+                    <span class="nav-item">Expense Tracker</span>
+                </a>
+            </li>
+    </div>
+    
+        <div class="container">
+            <form id="event-form" style="display: none;", class="event-form">
+                <input type="text" id="event-title" placeholder="Event Title" required />
+                <input type="date" id="event-start" required />
+                <input type="date" id="event-end" placeholder="End Date (optional)" />
+                <button type="submit">Add Event</button>
+            </form>
+            <div id="calendar-container"></div>
+            <div id="todo-container">
+                <h1>Household To-Do List</h1>
+                <input type="text" id="newTaskInput" placeholder="Add a new task..." />
+                <button id="addTaskBtn">Add Task</button>
+                <ul id="taskList"></ul>
+            </div>
+            <div id="expense-container" style="display: none;">
+                <h1>Expense Tracker</h1>
+                <form id="expense-form">
+                    <input type="text" id="expense-title" placeholder="Expense Title" required />
+                    <input type="number" id="expense-amount" placeholder="Amount" required />
+                    <input type="date" id="expense-date" required />
+                    <button type="submit">Add Expense</button>
+                </form>
+                <ul id="expenseList"></ul>
+                <div class="total-amount">
+                    <strong>Total: $<span id="total-amount">0.00</span></strong>
+                </div>
+            </div>
+        </div>
+
+    <script src="{{ url_for('static', filename='dashboard.js') }}"></script>
+    
+    <script>
+       
+    </script>
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='register.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="login-section {{ 'active' if form_type == 'register' else '' }}">
+            <div class="form-box login">
+                <h1 class="head">{{ form_title }}</h1>
+                {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                        <ul>
+                        {% for message in messages %}
+                            <li>{{ message }}</li>
+                        {% endfor %}
+                        </ul>
+                    {% endif %}
+                {% endwith %}
+                <form method="POST" action="{{ url_for(form_action) }}">
+                    <div class="input-box">
+                        <input type="email" name="email" id="email" required>
+                        <label for="email">Email</label>
+                    </div>
+                    <div class="input-box">
+                        <input type="password" name="password" id="pass" required>
+                        <label for="pass">Password</label>
+                    </div>
+                    <button type="submit" class="btn">Login</button>
+                    <div class="create-account">
+                        <p>Create A New Account? <a href=# class="register-link">Sign Up</a></p>
+                    </div>
+                </form>
+            </div>
+            <div class="form-box register">
+                <h1 class="head">Register</h1>
+                <form method="POST" action="{{ url_for('register') }}">
+                    <div class="input-box">
+                        <input type="text" name="full_name" id="fname" required>
+                        <label for="fname">Full Name</label>
+                    </div>
+                    <div class="input-box">
+                        <input type="email" name="email" id="email-register" required>
+                        <label for="email-register">Email</label>
+                    </div>
+                    <div class="input-box">
+                        <input type="password" name="password" id="pass-register" required>
+                        <label for="pass-register">Password</label>
+                    </div>
+                    <div class="input-box">
+                        <input type="password" name="repeat_password" id="repeat" required>
+                        <label for="repeat">Repeat Password</label>
+                    </div>
+                    <button type="submit" class="btn">Sign Up</button>
+                    <div class="create-account">
+                        <p>Already Have An Account? <a href= "#"class="login-link">Sign In</a></p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='register.js') }}"></script>
+</body>
+</html>
