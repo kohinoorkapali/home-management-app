@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', function() {
         $('#calendar-container').show(); // Show calendar
         $('#todo-container').hide();
         $('#expense-container').hide();
-        $('#event-form').toggle(); 
+        $('#event-form').show(); 
         calendar.render();  // Render the calendar
     });
 
@@ -74,71 +74,91 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 // To-Do List functionality
-$('#addTaskBtn').on('click', addTask); 
+$(document).ready(function() {
+    // Load tasks from local storage when the page loads
+    loadTasks();
+
     $('#todo-icon').on('click', function() {
-        $('#todo-container').show(); // Show to-do list
         $('#calendar-container').hide(); 
-        $('#expense-container').hide();
+        $('#expense-container').hide(); 
+        $('#todo-container').show(); 
         $('#event-form').hide(); 
-        loadTasks(); 
+    });
+    $('#addTaskBtn').on('click', addTask);
+        $('#taskList').on('click', '.delete-btn', function() {
+            const taskText = $(this).siblings('.task-text').text();
+            removeTask(taskText);
+            $(this).parent().remove(); // Remove the task from the DOM
+        });
+        $('#taskList').on('change', '.task-checkbox', function() {
+            const taskText = $(this).siblings('.task-text').text();
+            toggleTaskCompletion(taskText, this.checked);
+        });
     });
     
+    // Function to add a task
     function addTask() {
-        const input = document.getElementById('newTaskInput');
-        const taskText = input.value.trim();
+        const input = $('#newTaskInput');
+        const taskText = input.val().trim();
     
         if (taskText === '') return; // Prevent adding empty tasks
     
-        saveTaskToLocalStorage(taskText); // Save task to localStorage
-        addTaskToDOM(taskText); 
-    
-        input.value = ''; // Clear input field
+        // Save task to local storage
+        saveTaskToLocalStorage(taskText);
+        addTaskToDOM(taskText);
+        input.val(''); // Clear input field
     }
     
-    function addTaskToDOM(taskText) {
-        const li = document.createElement('li');
-        li.innerHTML = `
-            <span class="task-text">${taskText}</span>
-            <button class="delete-btn" aria-label="Delete task">X</button>
-        `;
-        document.getElementById('taskList').appendChild(li);
-    }
-    
-    document.getElementById('taskList').addEventListener('click', function(event) {
-        if (event.target.classList.contains('delete-btn')) {
-            removeTask(event.target);
-        }
-    });
-    
-    window.removeTask = function(button) { // Make removeTask globally accessible
-        const taskText = button.parentElement.childNodes[0].textContent.trim();
-        removeTaskFromLocalStorage(taskText); // Remove task from localStorage
-        button.parentElement.remove();
-    };
-    
+    // Function to save task to local storage
     function saveTaskToLocalStorage(taskText) {
         const tasks = getTasksFromLocalStorage();
-        tasks.push({ text: taskText }); 
-        localStorage.setItem('tasks', JSON.stringify(tasks)); // Save updated tasks to localStorage
+        tasks.push({ text: taskText, completed: false }); // Store as an object with completion state
+        localStorage.setItem('tasks', JSON.stringify(tasks)); // Save updated tasks to local storage
     }
     
-    function removeTaskFromLocalStorage(taskText) {
-        let tasks = getTasksFromLocalStorage();
-        tasks = tasks.filter(task => task.text !== taskText); // Filter out the removed task
-        localStorage.setItem('tasks', JSON.stringify(tasks)); 
-    }
-    
+    // Function to get tasks from local storage
     function getTasksFromLocalStorage() {
-        return JSON.parse(localStorage.getItem('tasks')) || []; // Retrieve tasks from localStorage
+        return JSON.parse(localStorage.getItem('tasks')) || []; // Retrieve tasks from local storage
     }
     
-    // Load tasks from localStorage when the page loads
+    // Function to load tasks from local storage
     function loadTasks() {
         const tasks = getTasksFromLocalStorage();
         tasks.forEach(task => {
-            addTaskToDOM(task.text);
+            addTaskToDOM(task.text, task.completed); // Access the text and completed properties
         });
     }
+    
+    // Function to add a task to the DOM
+    function addTaskToDOM(taskText, completed = false) {
+        const checkedAttribute = completed ? 'checked' : '';
+        const li = `<li>
+                        <input type="checkbox" class="task-checkbox" ${checkedAttribute}>
+                        <span class="task-text">${taskText}</span>
+                        <button class="delete-btn">X</button>
+                    </li>`;
+        $('#taskList').append(li);
+    }
+    
+    // Function to remove a task
+    function removeTask(taskText) {
+        let tasks = getTasksFromLocalStorage();
+        tasks = tasks.filter(task => task.text !== taskText); // Filter out the removed task
+        localStorage.setItem('tasks', JSON.stringify(tasks)); // Save updated tasks to local storage
+    }
+    
+    // Function to toggle task completion
+    function toggleTaskCompletion(taskText, isCompleted) {
+        let tasks = getTasksFromLocalStorage();
+        tasks = tasks.map(task => {
+            if (task.text === taskText) {
+                return { ...task, completed: isCompleted }; // Update the completion state
+            }
+            return task;
+        });
+        localStorage.setItem('tasks', JSON.stringify(tasks)); // Save updated tasks to local storage
+    }
+
 // Show Expense Tracker
         $('#expense-icon').on('click', function() {
             $('#expense-container').show(); // Show expense tracker
@@ -211,7 +231,7 @@ $('#addTaskBtn').on('click', addTask);
             const date = document.getElementById("expense-date").value;
     
             addExpenseToDOM(name, amount, date); 
-            updateLocalStorage(); // Update local storage with the new expense
+            updateLocalStorage();
             expenseForm.reset(); // Clear the input fields
         });
     

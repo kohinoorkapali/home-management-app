@@ -87,8 +87,6 @@ def add_event():
         return '', 201  
     return jsonify({"error": "Invalid event data"}), 400 
 
-
-
 @app.route('/add_expense', methods=['POST'])
 def add_expense():
     expense_name = request.form['expense_name']
