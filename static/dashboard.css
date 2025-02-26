@@ -39,7 +39,8 @@
     color: white; 
     background-color: transparent; 
     border: none;
-    cursor: pointer; 
+    cursor: pointer;
+    transition: 0.3s; 
 }
 #btn:hover{
     cursor:pointer;
@@ -156,3 +157,40 @@ h2 {
     font-size: 18px;
     margin-top: 20px; 
 }
+.logout-btn {
+    background: red; 
+    color: white; 
+    border: none; 
+    padding: 10px; 
+    cursor: pointer; 
+    display: flex; 
+    align-items: center; 
+    justify-content: flex-start; 
+    border-radius: 30px; 
+    width: 260px; 
+    transition: background-color 0.3s;
+}
+
+.logout-btn:hover {
+    opacity: 0.6px;
+}
+
+.logout-btn i {
+    min-width: 60px; 
+    font-size: 40px; 
+    text-align: center; 
+    height: 60px; 
+    border-radius: 30px; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    margin-right: 10px; 
+}
+
+/* Hide text in collapsed state */
+.sidebar.active .nav-item {
+    display: none;
+}
+
+.sidebar.active .logout-btn .nav-item {
+    display: none; }
