@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', function() {
         $('#todo-container').hide();
         $('#expense-container').hide();
         $('#event-form').show(); 
-        calendar.render();  // Render the calendar
+        calendar.render();  
     });
 
     // Handle event form submission
