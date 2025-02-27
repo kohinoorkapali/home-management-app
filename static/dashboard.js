@@ -100,8 +100,12 @@ $(document).ready(function() {
     function addTask() {
         const input = $('#newTaskInput');
         const taskText = input.val().trim();
+        const message = $('#message');
     
-        if (taskText === '') return; // Prevent adding empty tasks
+        if (taskText === '') {
+            message.text('Please enter a task.').fadeIn().delay(2000).fadeOut(); 
+            return; 
+        }
     
         // Save task to local storage
         saveTaskToLocalStorage(taskText);

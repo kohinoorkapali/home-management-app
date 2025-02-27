@@ -39,10 +39,10 @@ def login():
         conn.close()
 
         if user and user[1] == password:  # Check if user exists and password matches
-            session['full_name']=user[0]
+            session['full_name'] = user[0]
             return redirect(url_for('dashboard'))  # Redirect to a dashboard 
         else:
-            flash('Invalid email or password')  
+            flash('Invalid email or password')  # Flash message for invalid login
     return render_template('register.html', title='Login', form_type='login', form_title='Sign In', form_action='login', button_text='Login')
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -60,13 +60,13 @@ def register():
         existing_user = c.fetchone()
 
         if existing_user:
-            flash('Email already registered')
+            flash('Email already registered')  # Flash message for existing email
         elif password != repeat_password:
-            flash('Passwords do not match')
+            flash('Passwords do not match')  # Flash message for password mismatch
         else:
             c.execute("INSERT INTO logindata (full_name, email, password) VALUES (?, ?, ?)", (full_name, email, password))
             conn.commit()
-            flash('Registration successful! Please log in.')
+            flash('Registration successful! Please log in.')  # Flash message for successful registration
             return redirect(url_for('login'))  # Redirect to login page 
         conn.close()
     return render_template('register.html', title='Register', form_type='register', form_title='Register', form_action='register', button_text='Register')

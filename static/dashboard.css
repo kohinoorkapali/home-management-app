@@ -75,7 +75,7 @@
 .sidebar ul li a .nav-item {
     flex-grow: 1; 
     margin-left: 10px;
-    transition: opacity 0.3s; /* Smooth transition for hiding */
+    transition: opacity 0.3s;
 }
 .sidebar ul li .tooltip {
     position: absolute;

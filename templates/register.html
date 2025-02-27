@@ -37,6 +37,15 @@
             </div>
             <div class="form-box register">
                 <h1 class="head">Register</h1>
+                {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                        <ul class="flash-messages">
+                        {% for message in messages %}
+                            <li>{{ message }}</li>
+                        {% endfor %}
+                        </ul>
+                    {% endif %}
+                {% endwith %}
                 <form method="POST" action="{{ url_for('register') }}">
                     <div class="input-box">
                         <input type="text" name="full_name" id="fname" required>
